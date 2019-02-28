@@ -43,7 +43,15 @@ double* Addtab(double* tab1, int size1, double* tab2, int size2){
 		cout << "ATTENTION : les tableaux n'ont pas la même taille" << endl;
 		return tab3;
 	}
+}
 
+double Sumtab(double* tab, int size){
+	// renvoit la somme des cases du tableau tab de taille size
+	double S=0; //initialisation de la somme 
+	for(int i=0; i<size; ++i){
+		S=S+tab[i];
+	}
+	return S;
 }
 
 
@@ -75,6 +83,12 @@ Affichetab(tab2, size);
 
 double* tab3 = Addtab(tab1, size, tab2, size);
 Affichetab(tab3, size);
+
+//Q4
+double sum1 = Sumtab(tab1, size);
+cout << "tab1 : " << endl;
+Affichetab(tab1, size);
+cout << "Somme des cases de tab1 = " << sum1 << endl;
 
 // DELETES
 delete tab1;
