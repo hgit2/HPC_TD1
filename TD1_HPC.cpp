@@ -90,7 +90,7 @@ omp_set_num_threads(coeur);
 double* tab1; // creation du tableau tab1
 tab1 = new double[size*sizeof(double)];
 Randomfill(tab1, size);
-Affichetab(tab1, size);
+//Affichetab(tab1, size);
 
 
 // Q3
