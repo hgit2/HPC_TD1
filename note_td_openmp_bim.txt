@@ -1,0 +1,51 @@
+* Compiler un fichier source C/C++ (fichier_source.c/cpp) avec le support d'OpenMP et créer un exécutable (executable):
+** pour le C:
+gcc -fopenmp fichier_source.c -o executable
+
+** pour le C++:
+g++ -fopenmp fichier_source.cpp -o executable
+
+
+
+* Allouer dynamiquement un tableau à partir d'un paramêtre passé à votre exécutable (./executable taille_tableau) : ./executable 1024
+#include <stdio.h>
+#include <stdlib.h>
+
+void func(double *tab, int taille_tableau) {
+ // Code de la fonction
+}
+
+int main(int argc, char** argv) {
+    int taille_tab = atoi(argv[1]);
+    
+    double *tab;
+    tab = (double*) malloc(taille_tab * sizeof(double));
+    
+    func(tab,taille_tab);
+}
+
+* Ajouter meld dans git (pas sur les machines du département):
+1. Télécharger meld dans votre hpme: https://download.gnome.org/sources/meld/3.20/meld-3.20.0.tar.xz
+2. Décompresser meld (vous devez avoir un répertoire du type meld-3.20.0)
+3. Ajouter meld dans le PATH (la liste des répertoires qui contient des exécutable) : export PATH=$PATH:~/meld-3.20.0/bin/
+4. Aller dans votre répertoire git et configurer meld: git config merge.tool meld
+5. Vous pouvez utiliser meld normalement
+
+
+* Ajouter le support OpenMP dans CMake, il faut ajouter dans le CMakeLists.txt:
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(MyTarget PUBLIC OpenMP::OpenMP_CXX)
+endif()
+
+* Mesurer le temps d'exécution d'un bout de code
+#include <time.h>
+
+[...]
+
+clock_t before =  clock() * 1000 / CLOCKS_PER_SEC;
+
+[... code à mesurer ...]
+
+clock_t after =  clock() * 1000 / CLOCKS_PER_SEC;
+int duration = after - before;
