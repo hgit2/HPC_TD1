@@ -98,14 +98,7 @@ double** Matprod(double** mat, int size1, int size2, double a){
 
 int main(int argc, char** argv){
 
-
-
 cout << "hello world" << endl;
-
-/* avec un vector
-vector<double> vect1(3,2.0);
-vect1.push_back(1.);
-cout << "vect1=" << vect1[3] << endl;*/
 
 // avec un tableau
 int size1=atoi(argv[1]); // donne le nombre de lignes de la matrice

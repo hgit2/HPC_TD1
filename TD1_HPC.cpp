@@ -72,14 +72,7 @@ double* Vectprod(double* tab, int size, double a){
 
 int main(int argc, char** argv){
 
-
-
 cout << "hello world" << endl;
-
-/* avec un vector
-vector<double> vect1(3,2.0);
-vect1.push_back(1.);
-cout << "vect1=" << vect1[3] << endl;*/
 
 // avec un tableau
 int size=atoi(argv[1]); // donne la taille du tableau
