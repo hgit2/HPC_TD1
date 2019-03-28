@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <omp.h> // OpenMP
 #include <time.h> // pour "chronométrer"
+#include <fstream> // pour les fichiers
 
 using namespace std;
 
@@ -78,7 +79,7 @@ double Summat(double** mat, int size1, int size2){
 
 
 double** Matprod(double** mat, int size1, int size2, double a){
-	// Multiplication de la metrice de doubles mat de taille size1 x size2 par un scalaire double a
+	// Multiplication de la matrice de doubles mat de taille size1 x size2 par un scalaire double a
 	double** matm; // tableau qui contiendra la multiplication des termes de tab par a
 	matm = new double*[size1];
     for (int i=0; i<size1; i++){
@@ -94,8 +95,34 @@ double** Matprod(double** mat, int size1, int size2, double a){
 }
 
 void Testfort(){
+	// Passage à l'échelle forte pour les fonctions Addtab, Summat, Matprod (pour 1, 2, 4 coeurs et 3 tailles de matrices carrées)
+
+	// Création des fichiers de sortie 
+	ofstream myfile1;
+	myfile1.open("fort_addmat.txt");
+	ofstream myfile2;
+	myfile2.open("fort_summat.txt");
+	ofstream myfile3;
+	myfile3.open("fort_matprod.txt");
+
+	// Titres des colones
+	myfile1 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
+	myfile2 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
+	myfile3 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
+
 	for(int size1=1000000; size1<=100000000; size1=size1*10){
-		for( int coeur=1; size<=4; coeur=coeur*2){
+		cout << "in size" << endl;
+		for( int coeur=1; coeur<=4; coeur=coeur*2){
+			cout<< "in coeur" << endl;
+			// moyennes des temps d'execution pour les trois fonctions
+			int timeaddtab=0;
+			int timesummat=0;
+			int timematprod=0;
+
+			int diff1;
+			int diff2;
+			int diff3;
+
 			int k=0;
 			while(k<4){
 				omp_set_num_threads(coeur);
@@ -104,14 +131,14 @@ void Testfort(){
 				double** mat1; 
 				mat1 = new double*[size1];
 				for (int i=0; i<size1; i++){
-    			mat1[i] = new double[size1*sizeof(double)];
+    				mat1[i] = new double[size1*sizeof(double)];
 				}	
 				Randomfill(mat1, size1, size1);
 				// creation de la matrice mat2
 				double** mat2; 
 				mat2 = new double*[size1];
 				for (int i=0; i<size1; i++){
-    			mat2[i] = new double[size1*sizeof(double)];
+    				mat2[i] = new double[size1*sizeof(double)];
 				}
 				Randomfill(mat2, size1, size1);
 
@@ -119,31 +146,53 @@ void Testfort(){
 				double** mat3 = Addtab(mat1, size1, size1, mat2, size1, size1); // somme de mat1 et de mat2
 				int after1=(clock()*1000)/CLOCKS_PER_SEC;
 				int diff1=after1 - before1; // temps d'execution de la somme de deux matrices
+				cout << diff1 << endl;
+				timeaddtab=timeaddtab+diff1; 
 
 				int before2=(clock()*1000)/CLOCKS_PER_SEC;
 				double sum1 = Summat(mat1, size1, size1); // somme des éléments de mat1
 				int after2=(clock()*1000)/CLOCKS_PER_SEC;
 				int diff2=after2 - before2; // temps d'execution de la somme des éléments d'une matrice 
+				timesummat=timesummat+diff2;
 
 				int before3=(clock()*1000)/CLOCKS_PER_SEC;
 				double** matm1=Matprod(mat1, size1, size1, 2); // multiplication des éléments de mat1 par 2
 				int after3=(clock()*1000)/CLOCKS_PER_SEC;
 				int diff3=after3 - before3; // temps d'execution de la multiplication des éléments d'une matrice par un scalaire
+				timematprod=timematprod+diff3;
+
+				// DELETES
+				delete mat1;
+				delete mat2;
+				delete mat3;
+				delete matm1;
 
 				++k;
 			}
-		//moyennes
-		//fichiers
+		// moyennes des temps d'exécution
+		timeaddtab=timeaddtab/4;
+		timematprod=timematprod/4;
+		timesummat=timesummat/4;
+
+		// remplissage des fichiers
+		cout << diff1 << endl;
+		myfile1 << coeur <<" \t "<< diff1 <<" \t "<< size1 << timeaddtab <<"\n";
+		myfile1 << coeur <<" \t "<< diff2 <<" \t "<< size1 << timesummat <<"\n";
+		myfile1 << coeur <<" \t "<< diff3 <<" \t "<< size1 << timematprod <<"\n";
 		}
 	}
-	
+
+	// fermer les fichiers
+	myfile1.close();
+	myfile2.close();
+	myfile3.close();	
 }
 
 
 int main(int argc, char** argv){
 
 cout << "hello world" << endl;
-
+/*
 // avec un tableau
 int size1=atoi(argv[1]); // donne le nombre de lignes de la matrice
 int size2=atoi(argv[2]); // donne le nombre de colonnes de la matrice
@@ -205,6 +254,9 @@ delete mat1;
 delete mat2;
 delete mat3;
 delete matm1;
+*/
+
+Testfort();
 
 return 0;
 }
