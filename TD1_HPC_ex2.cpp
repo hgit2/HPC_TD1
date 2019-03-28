@@ -44,6 +44,7 @@ map<char, int> Freqchar(char** mat, int size1, int size2){
 	// crée un objet map, freqc, contenant la liste, sans doublons, des char présents dans mat, associés à leur fréquence d'apparition
 	std::map<char, int> freqc; 
 	freqc.insert ( std::pair<char,int>(mat[0][0],0) ); // initialisation
+	# pragma omp parallel for collapse(2)
 	for(int i=0; i<size1; ++i){
 		for(int j=0; j<size2; ++j){
 			char letter=mat[i][j];
@@ -59,7 +60,6 @@ map<char, int> Freqchar(char** mat, int size1, int size2){
 			}
 			if(notpresent){
 				// le char n'a pas déjà été rencontré
-				cout<<i<<j<< mat[i][j]<<endl;
 				freqc.insert ( std::pair<char,int>(letter,1) );
 			}
 		}
@@ -74,8 +74,8 @@ cout << "hello world" << endl;
 // avec un tableau
 int size1=atoi(argv[1]); // donne le nombre de lignes de la matrice
 int size2=atoi(argv[2]); // donne le nombre de colonnes de la matrice
-//int coeur=atoi(argv[2]); //Q5 : donne le nombre de coeur
-//omp_set_num_threads(coeur);
+int coeur=atoi(argv[2]); // donne le nombre de coeur
+omp_set_num_threads(coeur);
 
 char** mat1; // creation de la matrice mat1
 mat1 = new char*[size1];
@@ -85,7 +85,11 @@ for (int i=0; i<size1; i++){
 Randomfill(mat1, size1, size2);
 Affichemat(mat1, size1, size2);
 
+int before=(clock()*1000)/CLOCKS_PER_SEC;
 map<char, int> freqmat1 = Freqchar(mat1, size1, size2);
+int after=(clock()*1000)/CLOCKS_PER_SEC;
+int diff=after - before;
+cout << "temps d'execution de la multiplication des éléments d'un vecteur par un scalaire " << diff << endl;
 
 cout << "liste:"<<endl;
 for(map<char,int>::iterator it=freqmat1.begin(); it!=freqmat1.end(); ++it){
