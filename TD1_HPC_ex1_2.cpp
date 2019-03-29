@@ -110,7 +110,7 @@ void Testfort(){
 	myfile2 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
 	myfile3 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
 
-	for(int size1=1000000; size1<=100000000; size1=size1*10){
+	for(int size1=50; size1<=5000; size1=size1*10){
 		cout << "in size" << endl;
 		for( int coeur=1; coeur<=4; coeur=coeur*2){
 			cout<< "in coeur" << endl;
@@ -142,12 +142,14 @@ void Testfort(){
 				}
 				Randomfill(mat2, size1, size1);
 
+				cout<< "finished fill"<<endl;
+
 				int before1=(clock()*1000)/CLOCKS_PER_SEC;
 				double** mat3 = Addtab(mat1, size1, size1, mat2, size1, size1); // somme de mat1 et de mat2
 				int after1=(clock()*1000)/CLOCKS_PER_SEC;
 				int diff1=after1 - before1; // temps d'execution de la somme de deux matrices
-				cout << diff1 << endl;
 				timeaddtab=timeaddtab+diff1; 
+				cout<<"timetab"<<timeaddtab<<endl;
 
 				int before2=(clock()*1000)/CLOCKS_PER_SEC;
 				double sum1 = Summat(mat1, size1, size1); // somme des éléments de mat1
@@ -175,10 +177,10 @@ void Testfort(){
 		timesummat=timesummat/4;
 
 		// remplissage des fichiers
-		cout << diff1 << endl;
-		myfile1 << coeur <<" \t "<< diff1 <<" \t "<< size1 << timeaddtab <<"\n";
-		myfile1 << coeur <<" \t "<< diff2 <<" \t "<< size1 << timesummat <<"\n";
-		myfile1 << coeur <<" \t "<< diff3 <<" \t "<< size1 << timematprod <<"\n";
+		cout << size1 << endl;
+		myfile1 << coeur <<" \t "<< diff1 <<" \t "<< size1 << " \t "  << timeaddtab <<"\n";
+		myfile2 << coeur <<" \t "<< diff2 <<" \t "<< size1 << " \t " << timesummat <<"\n";
+		myfile3 << coeur <<" \t "<< diff3 <<" \t "<< size1 << " \t " << timematprod <<"\n";
 		}
 	}
 
