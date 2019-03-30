@@ -94,6 +94,7 @@ double** Matprod(double** mat, int size1, int size2, double a){
 	return matm;
 }
 
+/*
 void Testfort(){
 	// Passage à l'échelle forte pour les fonctions Addtab, Summat, Matprod (pour 1, 2, 4 coeurs et 3 tailles de matrices carrées)
 
@@ -188,6 +189,103 @@ void Testfort(){
 	myfile1.close();
 	myfile2.close();
 	myfile3.close();	
+}*/
+
+
+void Testfaible(){
+	// Passage à l'échelle faible pour les fonctions Addtab, Summat, Matprod (pour 1, 2, 4 coeurs et 3 tailles de matrices carrées)
+
+	// Création des fichiers de sortie 
+	ofstream myfile4;
+	myfile4.open("faible_addmat.txt");
+	ofstream myfile5;
+	myfile5.open("faible_summat.txt");
+	ofstream myfile6;
+	myfile6.open("faible_matprod.txt");
+
+	// Titres des colones
+	myfile4 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
+	myfile5 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
+	myfile6 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
+
+	for(int size1=1000000; size1<=4000000; size1=size1*2){
+		cout << "in size" << endl;
+		for( int coeur=1; coeur<=4; coeur=coeur*2){
+			cout<< "in coeur" << endl;
+			// moyennes des temps d'execution pour les trois fonctions
+			int timeaddtab=0;
+			int timesummat=0;
+			int timematprod=0;
+
+			int diff1;
+			int diff2;
+			int diff3;
+
+			int k=0;
+			while(k<4){
+				omp_set_num_threads(coeur);
+
+				// creation de la matrice mat1
+				double** mat1; 
+				mat1 = new double*[size1];
+				for (int i=0; i<size1; i++){
+    				mat1[i] = new double[size1*sizeof(double)];
+				}	
+				Randomfill(mat1, size1, size1);
+				// creation de la matrice mat2
+				double** mat2; 
+				mat2 = new double*[size1];
+				for (int i=0; i<size1; i++){
+    				mat2[i] = new double[size1*sizeof(double)];
+				}
+				Randomfill(mat2, size1, size1);
+
+				cout<< "finished fill"<<endl;
+
+				int before1=(clock()*1000)/CLOCKS_PER_SEC;
+				double** mat3 = Addtab(mat1, size1, size1, mat2, size1, size1); // somme de mat1 et de mat2
+				int after1=(clock()*1000)/CLOCKS_PER_SEC;
+				int diff1=after1 - before1; // temps d'execution de la somme de deux matrices
+				timeaddtab=timeaddtab+diff1; 
+				cout<<"timetab"<<timeaddtab<<endl;
+
+				int before2=(clock()*1000)/CLOCKS_PER_SEC;
+				double sum1 = Summat(mat1, size1, size1); // somme des éléments de mat1
+				int after2=(clock()*1000)/CLOCKS_PER_SEC;
+				int diff2=after2 - before2; // temps d'execution de la somme des éléments d'une matrice 
+				timesummat=timesummat+diff2;
+
+				int before3=(clock()*1000)/CLOCKS_PER_SEC;
+				double** matm1=Matprod(mat1, size1, size1, 2); // multiplication des éléments de mat1 par 2
+				int after3=(clock()*1000)/CLOCKS_PER_SEC;
+				int diff3=after3 - before3; // temps d'execution de la multiplication des éléments d'une matrice par un scalaire
+				timematprod=timematprod+diff3;
+
+				// DELETES
+				delete mat1;
+				delete mat2;
+				delete mat3;
+				delete matm1;
+
+				++k;
+			}
+		// moyennes des temps d'exécution
+		timeaddtab=timeaddtab/4;
+		timematprod=timematprod/4;
+		timesummat=timesummat/4;
+
+		// remplissage des fichiers
+		cout << size1 << endl;
+		myfile4 << coeur <<" \t "<< diff1 <<" \t "<< size1 << " \t "  << timeaddtab <<"\n";
+		myfile5 << coeur <<" \t "<< diff2 <<" \t "<< size1 << " \t " << timesummat <<"\n";
+		myfile6 << coeur <<" \t "<< diff3 <<" \t "<< size1 << " \t " << timematprod <<"\n";
+		}
+	}
+
+	// fermer les fichiers
+	myfile4.close();
+	myfile5.close();
+	myfile6.close();	
 }
 
 
@@ -258,7 +356,8 @@ delete mat3;
 delete matm1;
 */
 
-Testfort();
+//Testfort();
+Testfaible();
 
 return 0;
 }
