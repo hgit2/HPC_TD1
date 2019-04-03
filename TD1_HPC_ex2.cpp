@@ -23,7 +23,6 @@ void Randomfill(char** mat, int size1, int size2){
 	    for(int j=0; j<size2; ++j){
 		    int number = Frand(97,122); 
 		    mat[i][j]=char(number);
-		    //mat[i][j]=number;
 		}
 	}
 }
@@ -72,10 +71,10 @@ map<char, int> addmap(map<char, int> map1, map<char, int> map2){
 
 	map<char, int> addmap; 
 	for(int i=97; i<=122; ++i){
-		freqc.insert( std::pair<char,int>(char(i),0) ); // initialisation
-		map[i]=map1[i}+map2[i];
+		addmap.insert( std::pair<char,int>(char(i),0) ); // initialisation
+		addmap[i]=map1[i]+map2[i];
 	}
-	return map;
+	return addmap;
 }
 
 map<char, int> Freqchar2(char** mat, int size1, int size2){
@@ -84,6 +83,10 @@ map<char, int> Freqchar2(char** mat, int size1, int size2){
 	std::map<char, int> freqc; 
 	for(int i=97; i<=122; ++i){
 		freqc.insert( std::pair<char,int> (char(i),0) ); // initialisation
+	}
+	std::map<char, int> freqcglobal; 
+	for(int i=97; i<=122; ++i){
+		freqcglobal.insert( std::pair<char,int> (char(i),0) ); // initialisation
 	}
 	# pragma omp parallel for 
 	for(int i=0; i<size1; ++i){
@@ -97,6 +100,7 @@ map<char, int> Freqchar2(char** mat, int size1, int size2){
 					it->second=it->second+1; // on incrémente la fréquence d'apparition de ce char
 					break;
 				}
+		freqcglobal=addmap(freqcglobal, freqc); // somme le résultat des sous-problèmes
 			}
 		}
 	}
@@ -108,10 +112,9 @@ int main(int argc, char** argv){
 
 cout << "hello world" << endl;
 
-// avec un tableau
 int size1=atoi(argv[1]); // donne le nombre de lignes de la matrice
 int size2=atoi(argv[2]); // donne le nombre de colonnes de la matrice
-int coeur=atoi(argv[2]); // donne le nombre de coeur
+int coeur=atoi(argv[3]); // donne le nombre de coeur
 omp_set_num_threads(coeur);
 
 char** mat1; // creation de la matrice mat1
@@ -126,23 +129,12 @@ int before=(clock()*1000)/CLOCKS_PER_SEC;
 map<char, int> freqmat1 = Freqchar2(mat1, size1, size2);
 int after=(clock()*1000)/CLOCKS_PER_SEC;
 int diff=after - before;
-cout << "temps d'execution de la multiplication des éléments d'un vecteur par un scalaire " << diff << endl;
+cout << "temps d'execution du comptage de lettres d'une matrice " << diff << endl;
 
 cout << "liste:"<<endl;
 for(map<char,int>::iterator it=freqmat1.begin(); it!=freqmat1.end(); ++it){
     cout << it->first << " => " << it->second << "\n"; 
 }
-
-map<char, int> freqmat2 = Freqchar2(mat1, size1, size2);
-for(map<char,int>::iterator it=freqmat2.begin(); it!=freqmat2.end(); ++it){
-		cout << "map2" << endl;
-    cout << it->first << " => " << it->second << "\n"; 
-}
-
-map<char, int> add = addmap(freqmat1, freqmat2);
-/*for(map<char,int>::iterator it=add.begin(); it!=add.end(); ++it){
-    cout << it->first << " => " << it->second << "\n"; 
-}*/
 
 // DELETES
 delete mat1;
