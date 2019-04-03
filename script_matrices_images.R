@@ -61,19 +61,19 @@ legend("topleft", c(expression(paste("Taille=", 10^8)), expression(paste("Taille
 
 
 ## Plot t1 (taille =10^6) pour les trois fonctions
-plot( fort_prod_t1$nb_coeurs, fort_prod_t1$moy, type = "b", col="brown", pch=17,main = expression(paste("Temps d'exécution en fonction du nombre de coeurs pour un passage à l'échelle forte (taille=",10^6,") : matrices")), xlab="Nombre de coeurs", ylab="Temps d'exécution moyen", xlim=c(1,4), ylim=c(0,6))
+plot( fort_prod_t1$nb_coeurs, fort_prod_t1$moy, type = "b", col="brown", pch=17,main = expression(paste("Temps d'exécution en fonction du nombre de coeurs pour un passage à l'échelle forte (taille=",50,") : matrices")), xlab="Nombre de coeurs", ylab="Temps d'exécution moyen", xlim=c(1,4), ylim=c(0,6))
 points( fort_sum_t1$nb_coeurs, fort_sum_t1$moy, type = "b", col="darkcyan", pch=19)
 points( fort_sum2_t1$nb_coeur, fort_sum2_t1$moy, type = "b", col="darkorange1", pch=4)
 legend("topleft", c("Produit d'une matrice par un double","Somme des éléments d'une matrice", "Addition de 2 matrices"), col=c("brown", "darkcyan", "darkorange1"), lty=c(1,1,1), pch=c(17,19,4))
 
 ## Plot t2 (taille=10^7) pour les trois fonctions
-plot( fort_prod_t2$nb_coeurs, fort_prod_t2$moy, type = "b", col="brown", pch=17,main = expression(paste("Temps d'exécution en fonction du nombre de coeurs pour un passage à l'échelle forte (taille=",10^7,") : matrices")), xlab="Nombre de coeurs", ylab="Temps d'exécution moyen", xlim=c(1,4), ylim=c(0,4))
+plot( fort_prod_t2$nb_coeurs, fort_prod_t2$moy, type = "b", col="brown", pch=17,main = expression(paste("Temps d'exécution en fonction du nombre de coeurs pour un passage à l'échelle forte (taille=",500,") : matrices")), xlab="Nombre de coeurs", ylab="Temps d'exécution moyen", xlim=c(1,4), ylim=c(0,4))
 points( fort_sum_t2$nb_coeurs, fort_sum_t2$moy, type = "b", col="darkcyan", pch=19)
 points( fort_sum2_t2$nb_coeur, fort_sum2_t2$moy, type = "b", col="darkorange1", pch=4)
 legend("topleft", c("Produit d'une matrice par un double","Somme des éléments d'une matrices", "Addition de 2 matrices"), col=c("brown", "darkcyan", "darkorange1"), lty=c(1,1,1), pch=c(17,19,4))
 
 ## Plot t3 (taille=10^8) pour les trois fonctions
-plot( fort_prod_t3$nb_coeurs, fort_prod_t3$moy, type = "b", col="brown", pch=17,main = expression(paste("Temps d'exécution en fonction du nombre de coeurs pour un passage à l'échelle forte (taille=",10^8,") : matrices")), xlab="Nombre de coeurs", ylab="Temps d'exécution moyen", xlim=c(1,4), ylim=c(50,350))
+plot( fort_prod_t3$nb_coeurs, fort_prod_t3$moy, type = "b", col="brown", pch=17,main = expression(paste("Temps d'exécution en fonction du nombre de coeurs pour un passage à l'échelle forte (taille=",5000,") : matrices")), xlab="Nombre de coeurs", ylab="Temps d'exécution moyen", xlim=c(1,4), ylim=c(50,350))
 points( fort_sum_t3$nb_coeurs, fort_sum_t3$moy, type = "b", col="darkcyan", pch=19)
 points( fort_sum2_t3$nb_coeur, fort_sum2_t3$moy, type = "b", col="darkorange1", pch=4)
 legend("topleft", c("Produit d'une matrice par un double","Somme des éléments d'une matrice", "Addition de 2 matrices"), col=c("brown", "darkcyan", "darkorange1"), lty=c(1,1,1), pch=c(17,19,4))
