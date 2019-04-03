@@ -292,13 +292,14 @@ void Testfaible(){
 int main(int argc, char** argv){
 
 cout << "hello world" << endl;
-/*
+
 // avec un tableau
 int size1=atoi(argv[1]); // donne le nombre de lignes de la matrice
 int size2=atoi(argv[2]); // donne le nombre de colonnes de la matrice
-int coeur=atoi(argv[2]); //Q5 : donne le nombre de coeur
+int coeur=atoi(argv[3]); //Q5 : donne le nombre de coeur
 omp_set_num_threads(coeur);
 
+/*
 // Q1 et Q2
 double** mat1; // creation de la matrice mat1
 mat1 = new double*[size1];
