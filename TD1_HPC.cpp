@@ -125,10 +125,10 @@ cout << "Produit des cases de tab1 avec 2 = " << endl;
 Affichetab(tabm1, size);*/
 
 // DELETES
-delete tab1;
-delete tab2;
-delete tab3;
-delete tabm1;
+delete[] tab1;
+delete[] tab2;
+delete[] tab3;
+delete[] tabm1;
 
 return 0;
 }

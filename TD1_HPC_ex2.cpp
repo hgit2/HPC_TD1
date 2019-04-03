@@ -137,7 +137,11 @@ for(map<char,int>::iterator it=freqmat1.begin(); it!=freqmat1.end(); ++it){
 }
 
 // DELETES
-delete mat1;
+for (int i=0; i<size1; i++){
+	delete[] mat1[i];
+}
+
+delete[] mat1;
 
 return 0;
 }

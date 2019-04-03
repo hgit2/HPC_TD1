@@ -165,10 +165,22 @@ void Testfort(){
 				timematprod=timematprod+diff3;
 
 				// DELETES
-				delete mat1;
-				delete mat2;
-				delete mat3;
-				delete matm1;
+				for (int i=0; i<size1; i++){
+					delete[] mat1[i];
+				}
+				delete[] mat1;
+				for (int i=0; i<size1; i++){
+					delete[] mat2[i];
+				}
+				delete[] mat2;
+				for (int i=0; i<size1; i++){
+					delete[] mat3[i];
+				}
+				delete[] mat3;
+				for (int i=0; i<size1; i++){
+					delete[] matm1[i];
+				}
+				delete[] matm1;
 
 				++k;
 			}
@@ -262,10 +274,22 @@ void Testfaible(){
 				timematprod=timematprod+diff3;
 
 				// DELETES
-				delete mat1;
-				delete mat2;
-				delete mat3;
-				delete matm1;
+				for (int i=0; i<size1; i++){
+					delete[] mat1[i];
+				}
+				delete[] mat1;
+				for (int i=0; i<size1; i++){
+					delete[] mat2[i];
+				}
+				delete[] mat2;
+				for (int i=0; i<size1; i++){
+					delete[] mat3[i];
+				}
+				delete[] mat3;
+				for (int i=0; i<size1; i++){
+					delete[] matm1[i];
+				}
+				delete[] matm1;
 
 				++k;
 			}
@@ -351,11 +375,22 @@ cout << "Produit des cases de mat1 avec 2 = " << endl;
 Affichemat(matm1, size1, size2);
 
 // DELETES
-delete mat1;
-delete mat2;
-delete mat3;
-delete matm1;
-*/
+for (int i=0; i<size1; i++){
+	delete[] mat1[i];
+}
+delete[] mat1;
+for (int i=0; i<size1; i++){
+	delete[] mat2[i];
+}
+delete[] mat2;
+for (int i=0; i<size1; i++){
+	delete[] mat3[i];
+}
+delete[] mat3;
+for (int i=0; i<size1; i++){
+	delete[] matm1[i];
+}
+delete[] matm1;*/
 
 //Testfort();
 Testfaible();
