@@ -40,11 +40,39 @@ void Affichemat(char** mat, int size1, int size2){
 	} 
 }
 
-map<char, int> Freqchar(char** mat, int size1, int size2){
+/*map<char, int> Freqchar(char** mat, int size1, int size2){
 	// crée un objet map, freqc, contenant la liste, sans doublons, des char présents dans mat, associés à leur fréquence d'apparition
 	std::map<char, int> freqc; 
 	freqc.insert ( std::pair<char,int>(mat[0][0],0) ); // initialisation
-	# pragma omp parallel for collapse(2)
+	# pragma omp parallel for 
+	for(int i=0; i<size1; ++i){
+		for(int j=0; j<size2; ++j){
+			char letter=mat[i][j];
+			bool notpresent=true; // indique si letter a déjà été rencontrée
+			for (map<char,int>::iterator it=freqc.begin(); it!=freqc.end(); ++it){
+				char mapletter= it->first;
+				if(letter==mapletter){
+					// le char a déjà été rencontré
+					it->second=it->second+1; // on incrémente la fréquence d'apparition de ce char
+					bool notpresent=false;
+					break;
+				}
+			}
+			if(notpresent){
+				// le char n'a pas déjà été rencontré
+				freqc.insert ( std::pair<char,int>(letter,1) );
+			}
+		}
+	}
+	return freqc;
+}*/
+
+map<char, int> Freqchar(char** mat, int size1, int size2){
+	// crée un objet map, freqc, contenant la liste, sans doublons, des char présents dans mat, associés à leur fréquence d'apparition
+	
+	std::map<char, int> freqc; 
+	freqc.insert ( std::pair<char,int>(mat[0][0],0) ); // initialisation
+	# pragma omp parallel for 
 	for(int i=0; i<size1; ++i){
 		for(int j=0; j<size2; ++j){
 			char letter=mat[i][j];
@@ -66,6 +94,7 @@ map<char, int> Freqchar(char** mat, int size1, int size2){
 	}
 	return freqc;
 }
+
 
 int main(int argc, char** argv){
 

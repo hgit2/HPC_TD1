@@ -191,7 +191,7 @@ void Testfort(){
 	myfile3.close();	
 }*/
 
-
+/*
 void Testfaible(){
 	// Passage à l'échelle faible pour les fonctions Addtab, Summat, Matprod (pour 1, 2, 4 coeurs et 3 tailles de matrices carrées)
 
@@ -208,7 +208,7 @@ void Testfaible(){
 	myfile5 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
 	myfile6 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
 
-	for(int size1=1000000; size1<=4000000; size1=size1*2){
+	for(int size1=1000; size1<=4000; size1=size1*2){
 		cout << "in size" << endl;
 		for( int coeur=1; coeur<=4; coeur=coeur*2){
 			cout<< "in coeur" << endl;
@@ -287,7 +287,7 @@ void Testfaible(){
 	myfile5.close();
 	myfile6.close();	
 }
-
+*/
 
 int main(int argc, char** argv){
 
