@@ -191,7 +191,7 @@ void Testfort(){
 	myfile3.close();	
 }*/
 
-/*
+
 void Testfaible(){
 	// Passage à l'échelle faible pour les fonctions Addtab, Summat, Matprod (pour 1, 2, 4 coeurs et 3 tailles de matrices carrées)
 
@@ -208,10 +208,10 @@ void Testfaible(){
 	myfile5 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
 	myfile6 << "nb_coeurs \t tps_execution \t taille_vecteur \t moy" <<"\n";
 
-	for(int size1=1000; size1<=4000; size1=size1*2){
-		cout << "in size" << endl;
+		int size=1000;
 		for( int coeur=1; coeur<=4; coeur=coeur*2){
 			cout<< "in coeur" << endl;
+			int size1=size*coeur;
 			// moyennes des temps d'execution pour les trois fonctions
 			int timeaddtab=0;
 			int timesummat=0;
@@ -279,7 +279,7 @@ void Testfaible(){
 		myfile4 << coeur <<" \t "<< diff1 <<" \t "<< size1 << " \t "  << timeaddtab <<"\n";
 		myfile5 << coeur <<" \t "<< diff2 <<" \t "<< size1 << " \t " << timesummat <<"\n";
 		myfile6 << coeur <<" \t "<< diff3 <<" \t "<< size1 << " \t " << timematprod <<"\n";
-		}
+		
 	}
 
 	// fermer les fichiers
@@ -287,7 +287,7 @@ void Testfaible(){
 	myfile5.close();
 	myfile6.close();	
 }
-*/
+
 
 int main(int argc, char** argv){
 
