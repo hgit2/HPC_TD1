@@ -386,7 +386,7 @@ delete[] mat3;
 for (int i=0; i<size1; i++){
 	delete[] matm1[i];
 }
-delete[] matm1;*/
+delete[] matm1;
 
 // Tests pour différentes conditions (nombre de coeurs et taille des matrices variable)
 //Testfort(); // passage à l'échelle forte
